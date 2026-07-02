@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #2d4a2d;
+  --green-deep: #1a2e1a;
+  --dark: #111510;
+  --dark-2: #181e16;
+  --dark-3: #202820;
+  --terracotta: #c4724a;
+  --terra-light: #d9926e;
+  --cream: #f5f0e6;
+  --text: #c8c4ba;
+  --text-muted: #7d7971;
+  --border: rgba(196,114,74,0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Base custom classes that can be reused if needed, although tailwind will replace most */
+.nav-logo {
+  font-family: var(--font-playfair), serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream);
+  cursor: pointer;
+}
+.nav-logo span {
+  color: var(--terracotta);
+}
+
+.veg-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #4caf50;
+  border-radius: 2px;
+  position: relative;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.veg-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 5px;
+  height: 5px;
+  background: #4caf50;
+  border-radius: 50%;
+}
