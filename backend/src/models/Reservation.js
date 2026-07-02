@@ -1,22 +1,6 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface IReservation extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  date: string;
-  time: string;
-  guests: number;
-  occasion?: string;
-  seatingPreference: 'Inside' | 'Terrace' | 'Elevated Terrace';
-  dietaryRequirements?: string;
-  notes?: string;
-  status: 'Pending' | 'Confirmed' | 'Cancelled' | 'Completed';
-  referenceId: string;
-}
-
-const ReservationSchema: Schema = new Schema(
+const ReservationSchema = new Schema(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -40,10 +24,13 @@ const ReservationSchema: Schema = new Schema(
       default: 'Pending',
     },
     referenceId: { type: String, required: true, unique: true },
+    expireAt: { type: Date, default: null },
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.model<IReservation>('Reservation', ReservationSchema);
+ReservationSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
+
+export default mongoose.model('Reservation', ReservationSchema);

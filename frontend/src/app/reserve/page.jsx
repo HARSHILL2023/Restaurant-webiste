@@ -1,15 +1,6 @@
 'use client';
 import { useState } from 'react';
 
-type ReservationSuccess = {
-  firstName: string;
-  guests: number;
-  date: string;
-  time: string;
-  email: string;
-  referenceId: string;
-};
-
 export default function ReservePage() {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -24,22 +15,22 @@ export default function ReservePage() {
     notes: ''
   });
 
-  const [dietChips, setDietChips] = useState<string[]>([]);
+  const [dietChips, setDietChips] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [successData, setSuccessData] = useState<ReservationSuccess | null>(null);
+  const [successData, setSuccessData] = useState(null);
   const [error, setError] = useState('');
 
-  const handleChipClick = (chip: string) => {
+  const handleChipClick = (chip) => {
     setDietChips(prev =>
       prev.includes(chip) ? prev.filter(c => c !== chip) : [...prev, chip]
     );
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -60,7 +51,7 @@ export default function ReservePage() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccessData(data as ReservationSuccess);
+        setSuccessData(data);
       } else {
         setError(data.message || 'An error occurred while booking.');
       }
@@ -119,6 +110,9 @@ export default function ReservePage() {
             <div className="font-playfair text-[22px] text-ever-terracotta my-3">
               {successData.referenceId}
             </div>
+            <p className="text-ever-text-muted text-[14px] leading-[1.75] mb-2">
+              Status: <span className="font-semibold text-[#7bc97e]">{successData.status}</span>
+            </p>
             <p className="text-ever-text-muted text-[12px]">Please save this reference number. A confirmation email has been sent to {successData.email}.</p>
             <button
               onClick={() => setSuccessData(null)}

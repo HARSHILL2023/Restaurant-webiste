@@ -1,38 +1,35 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-type Reservation = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  date: string;
-  time: string;
-  guests: number;
-  occasion?: string;
-  seatingPreference: string;
-  status: string;
-  referenceId: string;
-};
-
 export default function AdminPage() {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
     const savedToken = localStorage.getItem('adminToken');
     if (savedToken) {
       setToken(savedToken);
-      fetchReservations(savedToken);
     }
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  useEffect(() => {
+    let interval;
+    if (token) {
+      fetchReservations(token);
+      interval = setInterval(() => {
+        fetchReservations(token);
+      }, 15000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [token]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -46,7 +43,6 @@ export default function AdminPage() {
       if (res.ok) {
         localStorage.setItem('adminToken', data.token);
         setToken(data.token);
-        fetchReservations(data.token);
       } else {
         setError(data.message || 'Login failed');
       }
@@ -57,13 +53,18 @@ export default function AdminPage() {
     }
   };
 
-  const fetchReservations = async (authToken: string) => {
+  const fetchReservations = async (authToken) => {
     try {
       const res = await fetch('http://localhost:5000/api/reservations', {
-        headers: { Authorization: `Bearer ${authToken}` },
+        headers: { 
+          Authorization: `Bearer ${authToken}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
       });
       if (res.ok) {
-        const data: Reservation[] = await res.json();
+        const data = await res.json();
         setReservations(data);
       }
     } catch {
@@ -71,7 +72,7 @@ export default function AdminPage() {
     }
   };
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
+  const handleStatusChange = async (id, newStatus) => {
     try {
       const res = await fetch(`http://localhost:5000/api/reservations/${id}/status`, {
         method: 'PATCH',

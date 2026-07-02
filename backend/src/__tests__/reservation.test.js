@@ -2,13 +2,13 @@
 // Import the reservationController logic only
 
 describe('Reservation capacity logic', () => {
-  const SEATING_CAPACITY: Record<string, number> = {
+  const SEATING_CAPACITY = {
     Inside: 90,
     Terrace: 70,
     'Elevated Terrace': 40,
   };
 
-  const getMinutesFromTime = (timeStr: string) => {
+  const getMinutesFromTime = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
     return (hours ?? 0) * 60 + (minutes ?? 0);
   };

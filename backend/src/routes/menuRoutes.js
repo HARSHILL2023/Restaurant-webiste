@@ -1,7 +1,7 @@
 import express from 'express';
-import { getMenu, createMenuItem, updateMenuItem, deleteMenuItem } from '../controllers/menuController';
-import { protect, admin } from '../middlewares/authMiddleware';
-import upload from '../middlewares/uploadMiddleware';
+import { getMenu, createMenuItem, updateMenuItem, deleteMenuItem } from '../controllers/menuController.js';
+import { protect, admin } from '../middlewares/authMiddleware.js';
+import upload from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 

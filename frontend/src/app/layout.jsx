@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
@@ -17,7 +16,7 @@ const inter = Inter({
   weight: ['300', '400', '500', '600', '700'],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'The Ever House — Pure Vegetarian All Day Bistro',
   description: 'A 100% vegetarian, alcohol-free all-day bistro in Thaltej, Ahmedabad. Good food and great mocktails, any hour of the day.',
   openGraph: {
@@ -37,11 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${inter.variable} font-inter antialiased`}>

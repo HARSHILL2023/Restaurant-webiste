@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
-import Menu from '../models/Menu';
-import cloudinary from '../config/cloudinary';
+import Menu from '../models/Menu.js';
+import cloudinary from '../config/cloudinary.js';
 
 // @desc    Get all menu items
 // @route   GET /api/menu
 // @access  Public
-export const getMenu = async (req: Request, res: Response) => {
+export const getMenu = async (req, res) => {
   try {
-    const filter: any = {};
+    const filter = {};
     
     // Optional filters for the frontend
     if (req.query.category) filter.category = req.query.category;
@@ -24,7 +23,7 @@ export const getMenu = async (req: Request, res: Response) => {
 // @desc    Create menu item
 // @route   POST /api/menu
 // @access  Private/Admin
-export const createMenuItem = async (req: Request, res: Response) => {
+export const createMenuItem = async (req, res) => {
   try {
     const { name, description, price, category, badges, isAvailable } = req.body;
     
@@ -57,7 +56,7 @@ export const createMenuItem = async (req: Request, res: Response) => {
     });
 
     res.status(201).json(menuItem);
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
@@ -65,7 +64,7 @@ export const createMenuItem = async (req: Request, res: Response) => {
 // @desc    Update menu item
 // @route   PUT /api/menu/:id
 // @access  Private/Admin
-export const updateMenuItem = async (req: Request, res: Response) => {
+export const updateMenuItem = async (req, res) => {
   try {
     const { name, description, price, category, badges, isAvailable } = req.body;
     
@@ -103,7 +102,7 @@ export const updateMenuItem = async (req: Request, res: Response) => {
 
     const updatedItem = await menuItem.save();
     res.json(updatedItem);
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
@@ -111,7 +110,7 @@ export const updateMenuItem = async (req: Request, res: Response) => {
 // @desc    Delete menu item
 // @route   DELETE /api/menu/:id
 // @access  Private/Admin
-export const deleteMenuItem = async (req: Request, res: Response) => {
+export const deleteMenuItem = async (req, res) => {
   try {
     const menuItem = await Menu.findById(req.params.id);
     

@@ -1,11 +1,10 @@
-import { Request, Response } from 'express';
-import User from '../models/User';
-import generateToken from '../utils/generateToken';
+import User from '../models/User.js';
+import generateToken from '../utils/generateToken.js';
 
 // @desc    Auth user & get token
 // @route   POST /api/auth/login
 // @access  Public
-export const authUser = async (req: Request, res: Response) => {
+export const authUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -30,7 +29,7 @@ export const authUser = async (req: Request, res: Response) => {
 // @desc    Register a new admin user (Initial setup only - should be protected/removed in prod)
 // @route   POST /api/auth/register
 // @access  Public (for now)
-export const registerAdmin = async (req: Request, res: Response) => {
+export const registerAdmin = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -66,7 +65,7 @@ export const registerAdmin = async (req: Request, res: Response) => {
 // @desc    Get user profile
 // @route   GET /api/auth/profile
 // @access  Private
-export const getUserProfile = async (req: any, res: Response) => {
+export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 

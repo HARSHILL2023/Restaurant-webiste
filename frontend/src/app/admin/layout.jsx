@@ -1,8 +1,4 @@
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function AdminLayout({ children }) {
   return (
     <div className="pt-[72px] min-h-screen bg-ever-dark-2">
       {children}

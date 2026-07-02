@@ -1,16 +1,16 @@
-import express, { Express, Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import connectDB from './config/db';
-import authRoutes from './routes/authRoutes';
-import reservationRoutes from './routes/reservationRoutes';
-import menuRoutes from './routes/menuRoutes';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import reservationRoutes from './routes/reservationRoutes.js';
+import menuRoutes from './routes/menuRoutes.js';
 
 dotenv.config();
 
-const app: Express = express();
+const app = express();
 const port = process.env.PORT || 5000;
 
 // Connect to Database
@@ -35,12 +35,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/menu', menuRoutes);
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req, res) => {
   res.send('The Ever House API is running...');
 });
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response, next: express.NextFunction) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });

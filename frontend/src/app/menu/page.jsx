@@ -1,19 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-type MenuItem = {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  badges: string[];
-  isAvailable: boolean;
-};
-
 export default function MenuPage() {
   const [activeTab, setActiveTab] = useState('breakfast');
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

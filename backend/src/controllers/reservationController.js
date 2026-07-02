@@ -1,6 +1,5 @@
-import { Request, Response } from 'express';
-import Reservation from '../models/Reservation';
-import sendEmail from '../utils/sendEmail';
+import Reservation from '../models/Reservation.js';
+import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 
 const SEATING_CAPACITY = {
@@ -10,7 +9,7 @@ const SEATING_CAPACITY = {
 };
 
 // Helper to calculate time difference in minutes
-const getMinutesFromTime = (timeStr: string) => {
+const getMinutesFromTime = (timeStr) => {
   const [hours, minutes] = timeStr.split(':').map(Number);
   return hours * 60 + minutes;
 };
@@ -18,7 +17,7 @@ const getMinutesFromTime = (timeStr: string) => {
 // @desc    Create a new reservation
 // @route   POST /api/reservations
 // @access  Public
-export const createReservation = async (req: Request, res: Response) => {
+export const createReservation = async (req, res) => {
   try {
     const {
       firstName, lastName, email, phone, date, time, guests,
@@ -26,7 +25,7 @@ export const createReservation = async (req: Request, res: Response) => {
     } = req.body;
 
     // Validate seating preference
-    if (!SEATING_CAPACITY[seatingPreference as keyof typeof SEATING_CAPACITY]) {
+    if (!SEATING_CAPACITY[seatingPreference]) {
       return res.status(400).json({ message: 'Invalid seating preference' });
     }
 
@@ -48,7 +47,7 @@ export const createReservation = async (req: Request, res: Response) => {
       }
     });
 
-    const maxCapacity = SEATING_CAPACITY[seatingPreference as keyof typeof SEATING_CAPACITY];
+    const maxCapacity = SEATING_CAPACITY[seatingPreference];
     
     if (currentGuests + guests > maxCapacity) {
       return res.status(400).json({ 
@@ -84,7 +83,7 @@ export const createReservation = async (req: Request, res: Response) => {
     }
 
     res.status(201).json(reservation);
-  } catch (error: any) {
+  } catch (error) {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
@@ -92,9 +91,9 @@ export const createReservation = async (req: Request, res: Response) => {
 // @desc    Get all reservations
 // @route   GET /api/reservations
 // @access  Private/Admin
-export const getReservations = async (req: Request, res: Response) => {
+export const getReservations = async (req, res) => {
   try {
-    const reservations = await Reservation.find({}).sort({ date: 1, time: 1 });
+    const reservations = await Reservation.find({}).sort({ createdAt: -1 });
     res.json(reservations);
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
@@ -104,13 +103,20 @@ export const getReservations = async (req: Request, res: Response) => {
 // @desc    Update reservation status
 // @route   PATCH /api/reservations/:id/status
 // @access  Private/Admin
-export const updateReservationStatus = async (req: Request, res: Response) => {
+export const updateReservationStatus = async (req, res) => {
   try {
     const { status } = req.body;
     const reservation = await Reservation.findById(req.params.id);
 
     if (reservation) {
       reservation.status = status;
+      
+      if (status === 'Confirmed' || status === 'Cancelled' || status === 'Rejected') {
+        reservation.expireAt = new Date(Date.now() + 2 * 60 * 1000); // 2 minutes
+      } else {
+        reservation.expireAt = null;
+      }
+
       const updatedReservation = await reservation.save();
 
       // If confirmed, send email
@@ -133,6 +139,23 @@ export const updateReservationStatus = async (req: Request, res: Response) => {
       }
 
       res.json(updatedReservation);
+    } else {
+      res.status(404).json({ message: 'Reservation not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// @desc    Get reservation by reference ID
+// @route   GET /api/reservations/ref/:refId
+// @access  Public
+export const getReservationByRef = async (req, res) => {
+  try {
+    const reservation = await Reservation.findOne({ referenceId: req.params.refId });
+
+    if (reservation) {
+      res.json(reservation);
     } else {
       res.status(404).json({ message: 'Reservation not found' });
     }

@@ -26,6 +26,13 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
+          <Link href="/status">
+            <button className={`bg-transparent border-none cursor-pointer font-inter text-[11px] md:text-xs font-medium tracking-[1.5px] uppercase px-[10px] md:px-[18px] py-2.5 rounded transition-colors duration-200 ${pathname === '/status' ? 'text-ever-terracotta bg-ever-terracotta/10' : 'text-ever-text-muted hover:text-ever-cream'}`}>
+              Check Status
+            </button>
+          </Link>
+        </li>
+        <li>
           <Link href="/reserve">
             <button className={`border-none cursor-pointer font-inter text-[11px] md:text-xs tracking-[1.5px] uppercase px-[10px] md:px-[18px] py-2.5 rounded transition-colors duration-200 bg-ever-terracotta text-ever-dark font-semibold hover:bg-ever-terra-light`}>
               Reserve a Table
