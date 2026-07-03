@@ -50,7 +50,7 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const fetchReservations = async (authToken) => {
     try {
