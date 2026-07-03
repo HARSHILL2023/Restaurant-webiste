@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -14,17 +14,17 @@ export default function Footer() {
           <h4 className="text-[10px] font-semibold tracking-[2px] uppercase text-ever-cream mb-[18px]">Navigate</h4>
           <ul className="list-none flex flex-col gap-2.5">
             <li>
-              <Link href="/" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
+              <Link to="/" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
                 Home
               </Link>
             </li>
             <li>
-              <Link href="/menu" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
+              <Link to="/menu" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
                 Menu
               </Link>
             </li>
             <li>
-              <Link href="/reserve" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
+              <Link to="/reserve" className="text-[13px] text-ever-text-muted no-underline transition-colors duration-200 hover:text-ever-terracotta">
                 Reserve
               </Link>
             </li>
@@ -51,7 +51,7 @@ export default function Footer() {
       </div>
       <div className="max-w-[1280px] mx-auto mt-11 pt-[22px] border-t border-ever-border flex flex-col md:flex-row justify-between items-center text-[11px] text-ever-text-muted gap-2.5 md:gap-0 text-center md:text-left">
         <span>© 2026 The Ever House · Pure Vegetarian · Ahmedabad</span>
-        <Link href="/admin">
+        <Link to="/admin">
           <button className="bg-transparent border border-ever-border text-ever-text-muted text-[11px] tracking-[1px] uppercase py-[7px] px-3.5 rounded cursor-pointer transition-colors duration-200 hover:text-ever-terracotta hover:border-ever-terracotta">
             View Reservations
           </button>

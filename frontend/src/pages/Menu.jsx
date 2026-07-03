@@ -10,7 +10,7 @@ export default function MenuPage() {
     // Fetch menu items
     const fetchMenu = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/menu`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/menu`);
         if (res.ok) {
           const data = await res.json();
           setMenuItems(data);

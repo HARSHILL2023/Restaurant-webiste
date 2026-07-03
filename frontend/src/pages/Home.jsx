@@ -1,6 +1,5 @@
 import Hero from '@/components/home/Hero';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -96,13 +95,12 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-[60px] md:py-[100px] px-6 md:px-[72px] max-w-[1320px] mx-auto">
         <div className="relative">
           <div className="absolute -top-3.5 -left-3.5 -right-3.5 -bottom-3.5 border border-ever-terracotta rounded-[2px] opacity-35" />
-          <Image
+          <img
             className="w-full h-[300px] md:h-[500px] object-cover rounded-[2px] block relative z-10"
             src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&q=80"
             alt="About The Ever House"
             width={900}
             height={500}
-            unoptimized
           />
         </div>
         <div>
@@ -126,7 +124,7 @@ export default function Home() {
         <h2 className="font-playfair text-[clamp(30px,3.5vw,50px)] font-bold text-ever-cream leading-[1.15] mb-[18px]">Your Table Is <em className="italic text-ever-terracotta">Waiting</em></h2>
         <p className="text-ever-text-muted text-[15px] mb-3 leading-[1.8]">302, Soham Pristine, Nr Shaligram-2 Bungalow<br />Off Sindhubhavan Road, Thaltej, Ahmedabad — 380054</p>
         <p className="text-ever-text-muted text-[13px] mb-10">100% Vegetarian · Alcohol-Free · All Day Dining · 200 Seats</p>
-        <Link href="/reserve">
+        <Link to="/reserve">
           <button className="bg-ever-terracotta text-ever-dark border-none py-4 px-9 font-inter text-xs font-bold tracking-[2px] uppercase rounded cursor-pointer transition-all duration-200 hover:bg-ever-terra-light hover:-translate-y-px">
             Book a Table
           </button>

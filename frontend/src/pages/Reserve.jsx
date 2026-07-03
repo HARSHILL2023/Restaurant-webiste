@@ -42,7 +42,7 @@ export default function ReservePage() {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/reservations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

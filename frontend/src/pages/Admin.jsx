@@ -34,7 +34,7 @@ export default function AdminPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -55,7 +55,7 @@ export default function AdminPage() {
 
   const fetchReservations = async (authToken) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/reservations`, {
         headers: { 
           Authorization: `Bearer ${authToken}`,
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -74,7 +74,7 @@ export default function AdminPage() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations/${id}/status`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/reservations/${id}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

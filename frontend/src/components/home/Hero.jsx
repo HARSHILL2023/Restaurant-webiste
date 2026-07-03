@@ -1,6 +1,5 @@
-'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 const slides = [
   'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1800&q=80',
@@ -50,12 +49,12 @@ export default function Hero() {
           <span className="text-[11px] tracking-[1.5px] uppercase border border-ever-border text-ever-text-muted px-3.5 py-1.5 rounded-full">🌅 Elevated Terrace · 40 Seats</span>
         </div>
         <div className="flex gap-3.5 justify-center flex-wrap">
-          <Link href="/reserve">
+          <Link to="/reserve">
             <button className="bg-ever-terracotta text-ever-dark border-none py-4 px-9 font-inter text-xs font-bold tracking-[2px] uppercase rounded cursor-pointer transition-all duration-200 hover:bg-ever-terra-light hover:-translate-y-px">
               Reserve a Table
             </button>
           </Link>
-          <Link href="/menu">
+          <Link to="/menu">
             <button className="bg-transparent text-ever-cream border border-ever-cream/35 py-4 px-9 font-inter text-xs font-bold tracking-[2px] uppercase rounded cursor-pointer transition-all duration-200 hover:border-ever-terracotta hover:text-ever-terracotta hover:-translate-y-px">
               View Menu
             </button>
