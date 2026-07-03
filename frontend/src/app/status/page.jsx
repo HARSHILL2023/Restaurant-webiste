@@ -16,7 +16,7 @@ export default function StatusPage() {
     setReservation(null);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/reservations/ref/${referenceId.trim().toUpperCase()}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations/ref/${referenceId.trim().toUpperCase()}`);
       const data = await res.json();
 
       if (res.ok) {
